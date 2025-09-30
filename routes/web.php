@@ -5,6 +5,7 @@ use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\MatakuliahController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProfilMahasiswaController;
+use App\Http\Controllers\AuthController;
 
 Route::get('/mahasiswa/{param1}', [MahasiswaController::class, 'show']);
 Route::resource('matakuliah', MatakuliahController::class);
@@ -47,3 +48,13 @@ Route::get('/home', [HomeController::class, 'index']);
 
 //latihan
 Route::get('/profil-mahasiswa', [ProfilMahasiswaController::class, 'index']);
+
+//signup
+Route::get('/', [HomeController::class, 'showSignUpForm'])->name('home.index');
+Route::post('/home/signup', [HomeController::class, 'signup'])->name('home.signup');
+
+
+// Route untuk menampilkan halaman login
+Route::get('/auth', [AuthController::class, 'index'])->name('login.form');
+// Route untuk memproses form login
+Route::post('/auth/login', [AuthController::class, 'login'])->name('login.submit');

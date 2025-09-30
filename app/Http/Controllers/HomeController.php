@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class HomeController extends Controller
 {
@@ -44,5 +46,30 @@ class HomeController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+    public function showSignUpForm()
+    {
+        return view('simple-home');
+    }
+
+    public function signup(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|max:255',
+            'email' => ['required', 'email'],
+            'password' => [
+                'required',
+                'string',
+                'min:8',
+                'regex:/[a-z]/',
+                'regex:/[A-Z]/',
+                'regex:/[0-9]/',
+            ],
+        ]);
+        $pageData['name']     = $request->name;
+        $pageData['email']    = $request->email;
+        $pageData['password'] = $request->password;
+
+        return view('signup-success', $pageData);
     }
 }
